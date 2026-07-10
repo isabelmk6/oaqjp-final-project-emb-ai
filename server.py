@@ -10,11 +10,15 @@ def emotDetector():
     text_to_analyze = request.args.get('textToAnalyze', '')
     response = emotion_detector(text_to_analyze)
     
+    if not response.get('dominant_emotion', None):
+        output = "Invalid text! Please try again!"
+        return output
+    
     output = "For the given statement, the system response is "
     i = 0
     for k,v in response.items():
         i += 1
-        if i <=4:
+        if i <= 4:
             output = output + f"'{k}': {v}, "
         elif i == 5:
             output = output + f"'{k}': {v}."
